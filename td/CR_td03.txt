@@ -1,0 +1,17 @@
+---------------------------
+Compte rendu de td du 07/02
+---------------------------
+
+Suivi du cahier des charges :
+----------------------------
+Il y a des incohérences notemment dans les transitions des paquets entre les routeurs.
+Manque de clareté, le sujet n'a pas l'air maitrisé.
+
+Le notions de réseau sont à réviser.
+Chercher virtualisation Erco.
+
+Première release :
+-----------------
+Virtualiser un réseau avec plusieurs routeurs et implémenter une
+commande pour ajouter des routes.
+
