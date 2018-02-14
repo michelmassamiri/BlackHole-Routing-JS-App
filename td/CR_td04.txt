@@ -1,0 +1,20 @@
+---------------------------
+Compte rendu de td du 14/02
+---------------------------
+
+Première release :
+--------------------------
+Compréhension du fonctionnement basique des réseaux :
+
+- Les notions suivantes ont été clarifiées : TCP/IP, table de routage, ports, adresses machines, routeurs.
+- On peut commencer à comprendre le fonctionnement du BGP notamment eBGP et iBGP.
+- La définition du "Next-hop" est maintenant maîtrisée.
+
+
+Pour l'audit :
+--------------------------
+- Il faut qu'on présente l'architecture de l'application avec WorkFlow.
+- On peut utiliser les diagrammes de classes pour présenter notre architecture, même si on n'avait pas des classes.
+  En outre, les diagrammes de classes représentent la structure des données.
+
+- Dans les diagrammes des classes, on peut avoir des données à part, et des fonctions associées manipulant ces données
