@@ -1,0 +1,45 @@
+---------------------
+-----CHEAT_SHEET-----
+---------------------
+
+
+----------------
+--command line--
+----------------
+
+
+route -n	//affiche table de routage
+
+hostname -i	//affiche addresse ip
+	 -I
+
+ifconfig	//affiche infos eth0 ...
+
+ip -a		//pareil
+
+netstat -lntup	//lister les ports ouverts et les services réseaux
+
+----------------
+------Qemu------
+----------------
+
+qemu-img create -f qcow2 -b <src> <dst>		//dupliqe le disque source
+
+
+----------------
+------NEmu------
+----------------
+nemu --file test.py	//run test.py nemu script
+
+//TO DO In virtual machine//
+apt get install net-tools
+
+
+----------------
+-----Emacs------
+----------------
+
+C-x C-f		//new buffer
+C-x C-o		//change active buffer when split
+C-g 		//quit command
+M-g g 		//Go to line
