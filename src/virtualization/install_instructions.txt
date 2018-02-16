@@ -3,18 +3,41 @@
 -------------------------
 
 
--Install NEmu: http://nemu.valab.net/index.php?static27/tuto-setup-nemu-linux
+---------------
+I.\Installation
+---------------
 
--Download Debian9_lxde iso: https://caesar.ftp.acc.umu.se/debian-cd/current-live/i386/iso-hybrid/debian-live-9.3.0-i386-lxde.iso
+	I.1\NEmu
+	--------
 
--Install Debian on a virtual HD: _(optional) edit the "img_dir" and "src_dir" variables in "install_debian9.py". Otherwise, you need to run the script with nemu from the iso directory. The Virtual HD will be created in this directory too.
+		-Install NEmu: http://nemu.valab.net/index.php?static27/tuto-setup-nemu-linux
+
+		-Download Debian9_lxde iso: https://caesar.ftp.acc.umu.se/debian-cd/current-live/i386/iso-hybrid/debian-live-9.3.0-i386-lxde.iso
+
+		-Install Debian on a virtual HD: _(optional) edit the "img_dir" and "src_dir" variables in "install_debian9.py". Otherwise, you need to run the script with nemu from the iso directory. The Virtual HD will be created in this directory too.
 	 	     	     	 _$>nemu -f install_debian9.py
 				 _follow the instructions
 
 
--Duplicate created img:	_(optional) see above : edit the "path" variable if necessary
+		-Duplicate created img:	_(optional) see above : edit the "path" variable if necessary
 			_$>./duplicate_img
 			_client.qcow2 attacker.qcow2 target.qcow2 and route_server.qcow2 will be created
+
+	I.2\ Dynamips
+	-------------
+		-$sudo apt-get dynamips
+
+
+----------------------
+II.\Run virtualization
+----------------------
+
+	-$>mkdir dynafile	//this directory will be used to store dynamips generated files in order to keep working directory clean
+	-$>cd dynafile
+	-$>./dyna.sh		//run the virtualization of the 3 ciscos router
+	-$>cd ..
+
+	-$>nemu -f  topology.py -i 	//run the virtualization of the 4 debian img 
 
 
 
