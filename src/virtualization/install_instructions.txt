@@ -28,18 +28,103 @@ I.\Installation
 		-$sudo apt-get dynamips
 
 
+--------------------------
+II.Configuration Routeur:
+--------------------------
+
+
+Etape 0:  Lancer ./dyna.sh
+--------
+
+Etape 1: xterm &; (Dans le xterm)telnet 127.0.0.1 2001; //config premier routeur
+--------
+
+Etape 2: message dialog -> no; en;(Passage en droit admin);
+--------
+
+Etape 3: Configuration IP
+--------
+
+	Router>en
+	Router#conf t
+	Router(config)#hostname Router1
+	
+	Router1(config)#interface fastEthernet 1/0
+	Router1(config-if)#ip address 10.1.0.1 255.255.0.0
+	Router1(config-if)#no shutdown
+	Router1(config-if)#exit
+
+	Router1(config)#interface fastEthernet 2/0
+	Router1(config-if)#ip address 11.1.0.1 255.255.0.0
+	Router1(config-if)#no shutdown
+	Router1(config-if)#exit
+
+	Router1(config)#exit
+	Router1#sh run interface
+
+Etape 4: Configuration Route
+--------
+
+	Router1#conf t
+	Router1(config)#ip route 11.2.0.0 255.255.0.0 11.1.0.3
+	Router1(config)#exit
+
+	Router1#sh ip route
+
+
+Etape 5: Enregistrer configuration
+--------
+
+	Router1#wr
+
+Etape 6: Refaire la démarche pour le Router2 et Router3
+--------
+
+	telnet 127.0.0.1 2002
+	name: Router2
+	fa1/0: 10.2.0.1 255.255.0.0
+	fa2/0: 11.1.0.2 255.255.0.0
+	ip route 11.2.0.0 255.255.0.0 11.1.0.3
+
+	telnet 127.0.0.1 2003
+	name: Router3
+	fa1/0: 11.1.0.3 255.255.0.0
+	fa2/0: 11.2.0.1 255.255.0.0
+	ip route 10.1.0.0 255.255.0.0 11.1.0.1
+	ip route 10.2.0.0 255.255.0.0 11.1.0.2
+
 ----------------------
-II.\Run virtualization
+III.\Run virtualization
 ----------------------
 
-	-$>mkdir dynafile	//this directory will be used to store dynamips generated files in order to keep working directory clean
-	-$>cd dynafile
+	-$>cd dynafile          //this directory will be used to store dynamips generated files in order to keep working directory clean
 	-$>./dyna.sh		//run the virtualization of the 3 ciscos router
 	-$>cd ..
 
 	-$>nemu -f  topology.py -i 	//run the virtualization of the 4 debian img 
 
+-------------------------
+VI.Configuration Meteor:
+-------------------------
 
+
+!!! A installer sur route-server !!!
+
+$> sudo  apt-get install curl
+$> curl https://install.meteor.com/ | sh
+$> cd BlackHole
+$> meteor npm install --save @babel/runtime
+$> meteor
+
+
+------------------------
+V.Configuration ExaBGP
+------------------------
+
+!!! A installer sur route-server !!!
+
+$> sudo apt-get install exabgp
+$> exabgp conf.ini
 
 
 
