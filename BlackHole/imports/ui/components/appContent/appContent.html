@@ -3,8 +3,10 @@
             {{> listCommand }}
 
         <div class="content">
+            {{#if currentUser}}
                 {{> executeCommand}}
                 {{> addRoute }}
+            {{/if}}
 
             {{> listRoutes}}
         </div>
