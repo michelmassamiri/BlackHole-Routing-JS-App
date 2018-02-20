@@ -71,13 +71,23 @@ Etape 4: Configuration Route
 
 	Router1#sh ip route
 
+Etape 5: Configuration BGP
+--------
 
-Etape 5: Enregistrer configuration
+	Router1#conf t
+	Router1(config)#router bgp 64501
+	Router1(config-router)#neighbor 11.1.0.2 remote-as 64501
+	Router1(config-router)#neighbor 11.1.0.3 remote-as 64501
+	Router1(config-router)#neighbor 11.1.0.4 remote-as 64501
+	Router1(config-router)#neighbor 10.1.0.2 remote-as 64502
+	Router1(config-router)#neighbor 10.1.0.3 remote-as 64503
+
+Etape 6: Enregistrer configuration
 --------
 
 	Router1#wr
 
-Etape 6: Refaire la démarche pour le Router2 et Router3
+Etape 7: Refaire la démarche pour le Router2 et Router3
 --------
 
 	telnet 127.0.0.1 2002
@@ -85,6 +95,12 @@ Etape 6: Refaire la démarche pour le Router2 et Router3
 	fa1/0: 10.2.0.1 255.255.0.0
 	fa2/0: 11.1.0.2 255.255.0.0
 	ip route 11.2.0.0 255.255.0.0 11.1.0.3
+	router bgp 64501
+	neighbor 11.1.0.1 remote-as 64501
+	neighbor 11.1.0.3 remote-as 64501
+	neighbor 11.1.0.4 remote-as 64501
+	neighbor 10.2.0.3 remote-as 64502
+	neighbor 10.2.0.2 remote-as 64503
 
 	telnet 127.0.0.1 2003
 	name: Router3
@@ -92,6 +108,11 @@ Etape 6: Refaire la démarche pour le Router2 et Router3
 	fa2/0: 11.2.0.1 255.255.0.0
 	ip route 10.1.0.0 255.255.0.0 11.1.0.1
 	ip route 10.2.0.0 255.255.0.0 11.1.0.2
+	router bgp 64501
+	neighbor 11.1.0.1 remote-as 64501
+	neighbor 11.1.0.2 remote-as 64501
+	neighbor 11.1.0.4 remote-as 64501
+	neighbor 11.2.0.2 remote-as 64504
 
 ----------------------
 III.\Run virtualization
