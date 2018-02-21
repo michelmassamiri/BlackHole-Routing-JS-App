@@ -81,6 +81,9 @@ Etape 5: Configuration BGP
 	Router1(config-router)#neighbor 11.1.0.4 remote-as 64501
 	Router1(config-router)#neighbor 10.1.0.2 remote-as 64502
 	Router1(config-router)#neighbor 10.1.0.3 remote-as 64503
+	Router1(config-router)#exit
+	Router1(config)#exit
+	Router1#sh bgp sum
 
 Etape 6: Enregistrer configuration
 --------
@@ -144,7 +147,8 @@ V.Configuration ExaBGP
 
 !!! A installer sur route-server !!!
 
-$> sudo apt-get install exabgp
+$> apt-get install python3-pip
+$> pip3 install exabgp
 $> exabgp conf.ini
 
 
