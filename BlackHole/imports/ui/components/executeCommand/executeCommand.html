@@ -1,28 +1,22 @@
 <template name="executeCommand">
-    <h3>Exécuter une command ExaBGP</h3>
-    <form class="form-horizontal">
-        <div class="form-group">
-            <div class="col-sm-6">
-                <div>
-                    <select id="command" class="form-control" name="command">
-                        <option value="reload">reload ExaBGP</option>
-                        <option value="restart">restart ExaBGP</option>
-                        <option value="show neighbors">show neighbors</option>
-                        <option value="version">version</option>
-                    </select>
-                </div>
-
-                <div class="return-message">
-                    <pre>
-                      <code id="command-result"></code>
-                    </pre>
-                </div>
-
-            </div>
-
-            <div class="col-sm-3">
-                <a id="submit-btn" class="btn btn-primary" href="#">Lancer</a>
+    <h3>Exécuter une commande ExaBGP</h3>
+    <div class="row">
+        <div class="col-sm-6">
+            <div>
+                <select id="command" class="form-control" name="command">
+                    <option value="reload">reload ExaBGP</option>
+                    <option value="restart">restart ExaBGP</option>
+                    <option value="show neighbors">show neighbors</option>
+                    <option value="version">version</option>
+                    <option value="addRoute">Ajouter une route</option>
+                </select>
             </div>
         </div>
-    </form>
+
+        <div class="col-sm-3">
+            <input type="button" id="submit-btn" class="btn btn-primary" value="Séléctionner"/>
+        </div>
+    </div>
+
+    {{> Template.dynamic template=showCommandTemplate }}
 </template>
