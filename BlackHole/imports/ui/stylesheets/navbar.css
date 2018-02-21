@@ -7,6 +7,12 @@
     background-color: #555;
 }
 
+@media screen and (min-width: 768px) {
+    nav .navbar-nav{
+        margin-right: -20px;
+    }
+}
+
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
 .row.content {height: 450px}
 
@@ -24,6 +30,9 @@
         padding: 15px;
     }
     .row.content {height:auto;}
+    .navbar-inverse {
+        padding-bottom: 20px;
+    }
 }
 
 /* Sign in Template */

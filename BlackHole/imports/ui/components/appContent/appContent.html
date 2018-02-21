@@ -1,11 +1,10 @@
 <template name="appContent">
-    <div class="container">
-            {{> listCommand }}
+    {{> listCommand }}
 
+    <div class="container">
         <div class="content">
             {{#if currentUser}}
                 {{> executeCommand}}
-                {{> addRoute }}
             {{/if}}
 
             {{> listRoutes}}
