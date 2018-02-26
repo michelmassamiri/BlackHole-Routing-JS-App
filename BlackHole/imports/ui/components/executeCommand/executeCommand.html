@@ -6,9 +6,28 @@
                 <select id="command" class="form-control" name="command">
                     <option value="reload">reload ExaBGP</option>
                     <option value="restart">restart ExaBGP</option>
-                    <option value="show neighbors">show neighbors</option>
-                    <option value="version">version</option>
+		    <option value="shutdown">shutdown</option>
+		    <option value="version">version</option>
+                    <option value="show neighbors">show neighbors summary</option>
+		    <option value="show neighbors">show neighbors extensive</option>
+		    <option value="show neighbors">show neighbors configuration</option>
+		    <option value="show ajd-rib">show ajd-rib in</option>
+		    <option value="show ajd-rib">show ajd-rib out</option>
+		    <option value="addWatchdog">Announce watchdog</option>
                     <option value="addRoute">Ajouter une route</option>
+		    <option value="addEor">Announce eor</option>
+		    <option value="addFlow">Announce flow</option>
+		    <option value="addOperational">Announce operational</option>
+		    <option value="addVpls">Announce vpls</option>
+		    <option value="addRefresh">Announce route-refresh</option>
+		    <option value="delWatchdog">Withdraw watchdog</option>
+                    <option value="delRoute">Withdraw route</option>
+		    <option value="delEor">Withdraw eor</option>
+		    <option value="delFlow">Withdraw flow</option>
+		    <option value="delOperational">Withdraw operational</option>
+		    <option value="delVpls">Withdraw vpls</option>
+		    <option value="delRefresh">Withdraw route-refresh</option>
+		    <option value="teardown">Teardown</option>
                 </select>
             </div>
         </div>
