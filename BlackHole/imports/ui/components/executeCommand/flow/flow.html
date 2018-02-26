@@ -8,14 +8,33 @@
                 <input id="source-ip" class="form-control" name="source-ip" placeholder="source-ip" required="required" type="text">
             </div>
 	</div>
+	
 	<div class="form-group">
 	    <label class="col-sm-3 control-label" for="destination-ip">Adresse IP destination</label>
             <div class="col-sm-9">
                 <input id="destination-ip" class="form-control" name="destination-ip" placeholder="destination-ip" required="required" type="text">
             </div>
 	</div>
+
 	<div class="form-group">
-	    <label class="col-sm-3 control-label" for="rate-limit">Rate-limit</label>
+	    <label class="col-sm-3 control-label" for="destination-port">Numéro de port de destination (optionnel)</label>
+            <div class="col-sm-9">
+                <input id="destination-port" class="form-control" name="destination-port" placeholder="destination-port" required="required" type="text">
+            </div>
+	</div>
+
+	 <div class="form-group">
+            <label class="col-sm-3 control-label" for="protocol">Protocol (optionnel)</label>
+            <div class="col-sm-9">
+                <select id="protocol" class="form-control" multiple="" name="protocol" required="required">
+                    <option value="tcp">TCP</option>
+                    <option value="udp">UDP</option>
+                </select>
+            </div>
+        </div>
+	
+	<div class="form-group">
+	    <label class="col-sm-3 control-label" for="rate-limit">Rate-limit (optionnel)</label>
             <div class="col-sm-9">
                 <input id="rate-limit" class="form-control" name="rate-limit" placeholder="rate-limit 1" required="required" type="text">
             </div>
