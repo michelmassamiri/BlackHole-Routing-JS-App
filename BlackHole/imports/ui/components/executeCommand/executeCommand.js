@@ -1,6 +1,7 @@
 import './addRoute/addRoute.js';
 import './showNeighbors/showNeighbors.js';
 import './flow/flow.js';
+import './eor/eor.js';
 import './executeCommand.html';
 
 
