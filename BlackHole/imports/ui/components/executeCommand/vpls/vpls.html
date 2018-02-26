@@ -1,0 +1,59 @@
+<template name="vpls">
+    <h3>Vpls</h3>
+    <form class="form-horizontal">
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="neighbor-ip">Adresse IP neighbor</label>
+            <div class="col-sm-9">
+                <input id="neighbor-ip" class="form-control" name="neighbor-ip" placeholder="neighbor ip" required="required" type="text">
+            </div>
+        </div>
+
+	<div class="form-group">
+            <label class="col-sm-3 control-label" for="endpoint">Endpoint</label>
+            <div class="col-sm-9">
+                <input id="endpoint" class="form-control" name="endpoint" placeholder="5" required="required" type="text">
+            </div>
+        </div>
+
+	<div class="form-group">
+            <label class="col-sm-3 control-label" for="base">Base</label>
+            <div class="col-sm-9">
+                <input id="base" class="form-control" name="base" placeholder="10702" required="required" type="text">
+            </div>
+        </div>
+
+	<div class="form-group">
+            <label class="col-sm-3 control-label" for="offset">Offset</label>
+            <div class="col-sm-9">
+                <input id="offset" class="form-control" name="offset" placeholder="1" required="required" type="text">
+            </div>
+        </div>
+
+	<div class="form-group">
+            <label class="col-sm-3 control-label" for="size">Size</label>
+            <div class="col-sm-9">
+                <input id="size" class="form-control" name="size" placeholder="8" required="required" type="text">
+            </div>
+        </div>
+
+	<div class="form-group">
+            <label class="col-sm-3 control-label" for="rd">Rd</label>
+            <div class="col-sm-9">
+                <input id="rd" class="form-control" name="rd" placeholder="addresse ip" required="required" type="text">
+            </div>
+        </div>
+
+        <div class="text-right">
+            <a id="submit-btn" class="btn btn-primary" href="#">Lancer</a>
+            <div class="return-message col-md-offset-10">
+                <div>
+                <pre>
+                  <code id="command-result"></code>
+                </pre>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</template>

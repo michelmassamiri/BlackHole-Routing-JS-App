@@ -2,6 +2,7 @@ import './addRoute/addRoute.js';
 import './showNeighbors/showNeighbors.js';
 import './flow/flow.js';
 import './eor/eor.js';
+import './vpls/vpls.js';
 import './executeCommand.html';
 
 
