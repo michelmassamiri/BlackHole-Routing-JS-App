@@ -32,8 +32,8 @@ class Healthcheck() :
 
     def get_json(self):
         """ This is a method that will return the parsed json object.
-        The method will read from the STDIN what exaBGP returned, then parse the output
-        to JSON object.
+        The method will read from the STDIN what exaBGP returned, then parse
+        the JSON object to the output.
         """
 
     def is_running(self):
@@ -41,3 +41,4 @@ class Healthcheck() :
         and if the config file has successfully loaded.
         returns (bool) : True if running, False if not.
         """
+    
