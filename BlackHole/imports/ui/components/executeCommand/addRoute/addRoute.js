@@ -19,11 +19,11 @@ Template.addRoute.events({
           "community": champ4,
       });
 
-
+      obj = JSON.parse(json);
       console.log(command_name, champ1, champ2, champ3, champ4);
-      console.log(json.command);
+      console.log(obj.command);
       console.log(json);
 
-      Meteor.call('post', 'http://localhost:5001/', {data: json});
+      Meteor.call('post', 'http://localhost:5001/', {data: obj});
     }
 });
