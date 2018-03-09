@@ -1,3 +1,4 @@
+import sys, getopt
 import cgi
 import http.server
 import socketserver
@@ -5,25 +6,26 @@ import re
 import os
 import time
 
-from sys import stdout
 from io import StringIO
 
 PORT = 5001
 
-#TODO: The path needs to be dynamic and not local
-fifo_sender_path = "/home/michs94/.local/run/exabgp/exabgp.in"
-fifo_receiver_path = "/home/michs94/.local/run/exabgp/exabgp.out"
+#fifo_sender_path = "/home/michs94/.local/run/exabgp/exabgp.in"
+#fifo_receiver_path = "/home/michs94/.local/run/exabgp/exabgp.out"
 
 class ExaBGPServerHandler(http.server.SimpleHTTPRequestHandler):
 
-    def writeToFifo(self, path, command):
+    def __init__(self, fifo_sender_path, fifo_receiver_path):
+        self.fifo_sender_path = fifo_sender_path
+        self.fifo_receiver_path = fifo_receiver_path
+
+    def writeToFifo(self, command):
         """ send and exaBGP command to the pipe from which exaBGP read
         the command to execute.
-        path(str): The pipe's location to which we send exaBGP commands
         command(str): The exabgp command
         returns (int) 0 on Success, 1 otherwise
         """
-        fifo_sender = open(path, "w")
+        fifo_sender = open(self.fifo_sender_path, "w")
         if(fifo_sender == None):
             self.createResponse("exabgp.in pipe does not exist\n")
             return 1
@@ -33,13 +35,12 @@ class ExaBGPServerHandler(http.server.SimpleHTTPRequestHandler):
         fifo_sender.close()
         return 0
 
-    def readFromFifo(self, path):
+    def readFromFifo(self):
         """ read an exaBGP response from the pipe that exabgp writes its
         messages.
-        path(str): The pipe's location from which we receive exaBGP messages
         returns (str): The exabgp response
         """
-        fifo_receiver = open(path, "r")
+        fifo_receiver = open(self.fifo_receiver_path, "r")
         if(fifo_receiver == None):
             self.createResponse("exabgp.out pipe does not exist\n")
             return 1
@@ -71,14 +72,14 @@ class ExaBGPServerHandler(http.server.SimpleHTTPRequestHandler):
         command = form.getvalue('command')
 
         if('shutdown' in command):
-            stdout.write(command +'\n')
-            stdout.flush()
+            sys.stdout.write(command +'\n')
+            sys.stdout.flush()
             self.createResponse("shutdown Success\n")
         else :
-            if(self.writeToFifo(fifo_sender_path, command) == 0):
+            if(self.writeToFifo(command) == 0):
                 #wait for exabgp to finish writing in the exabgp.out pipe
                 time.sleep(0.5)
-                response = self.readFromFifo(fifo_receiver_path)
+                response = self.readFromFifo()
                 self.createResponse('Success:\n' + response)
 
     #def do_GET(self):
@@ -95,6 +96,32 @@ class ExaBGPServerHandler(http.server.SimpleHTTPRequestHandler):
             #self.wfile.write(bytes(json_str, 'utf-8'))
 
 
-handler = ExaBGPServerHandler
-httpd = socketserver.TCPServer(('', PORT), handler)
-httpd.serve_forever()
+def main(argv):
+    input_pipe = ''
+    output_pipe = ''
+    try:
+        opts, args = getopt.getopt(argv,"hi:o:",["ipipe=","opipe="])
+    except getopt.GetoptError:
+        print('USAGE : http_api.py -i <exabgp input pipe path: /path/to/exabgp.in> -o <exabgp output pipe path: /path/to/exabgp.out>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print('USAGE : http_api.py -i <exabgp input pipe path: /path/to/exabgp.in> -o <exabgp output pipe path: /path/to/exabgp.out>')
+            sys.exit()
+        elif opt in ("-i", "--ipipe"):
+            input_pipe = arg
+        if opt in ("-o", "--opipe"):
+            output_pipe = arg
+    if(input_pipe == '' or output_pipe == ''):
+        print('USAGE : http_api.py -i <exabgp input pipe path: /path/to/exabgp.in> -o <exabgp output pipe path: /path/to/exabgp.out>')
+        sys.exit(2)
+
+    handler = ExaBGPServerHandler(input_pipe, output_pipe)
+    httpd = socketserver.TCPServer(('', PORT), handler)
+    httpd.serve_forever()
+
+if __name__ == "__main__":
+    #handler = ExaBGPServerHandler
+    #httpd = socketserver.TCPServer(('', PORT), handler)
+    #httpd.serve_forever()
+    main(sys.argv[1:])
