@@ -1,12 +1,10 @@
+#!/usr/bin/python3
 import cgi
 import http.server
 import socketserver
-import re
-import json
-import checkhealth_exaBGP
+
 from sys import stdout
 
-#PORT = 5001
 #data = {
 #    'command' : 'Get',
 #    'done' : 'true'
@@ -16,18 +14,13 @@ from sys import stdout
 
 class ServerHandler(http.server.SimpleHTTPRequestHandler):
 
-    def __init__(self, address, port):
-        self.healthcheck = Healthcheck()
-        self.address = address
-        self.port = port
-
     def createResponse(self, command):
         """ Send command string back as confirmation """
         self.send_response(200)
-        self.send_header('Content-Type', 'application/json')
+        self.send_header('Content-Type', 'application/text')
         self.end_headers()
-        self.wfile.write(command)
-        self.wfile.close()
+        self.wfile.write(bytes(command, 'utf-8'))
+        #self.wfile.close()
 
     def do_POST(self):
         """ Process command from POST and output to STDOUT """
@@ -41,20 +34,20 @@ class ServerHandler(http.server.SimpleHTTPRequestHandler):
         stdout.flush()
 
     def do_GET(self):
-        if re.search('/healthcheck', self.path) != None:
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
+        #if re.search('/?command=show version', self.path) != None:
+            #self.send_response(200)
+            #self.send_header('Content-Type', 'application/json')
+            #self.end_headers()
             #execute('the healthcheck.py')
             #test_output.test_print('http://localhost', PORT)
             #returning a json rfile(Get_result)
             #self.wfile.write(bytes(json_str, 'utf-8'))
 
-            if()
+            self.createResponse('IT IS YOU FAULT\n')
 
 
-handler = ServerHandler("localhost", 5001)
-httpd = socketserver.TCPServer(('', handler.port), handler)
+handler = ServerHandler
+httpd = socketserver.TCPServer(('', 5001), handler)
 #stdout.write('serving at port %s\n' % PORT)
-stdout.flush()
+#stdout.flush()
 httpd.serve_forever()

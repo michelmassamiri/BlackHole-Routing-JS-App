@@ -38,7 +38,7 @@ class ExaBGPServerHandler(http.server.SimpleHTTPRequestHandler):
         """
         exa_pid = os.getppid()
         try:
-            os.kill(ppid, 0)
+            os.kill(exa_pid, 0)
         except OSError:
             return False
         return True
@@ -61,7 +61,15 @@ class ExaBGPServerHandler(http.server.SimpleHTTPRequestHandler):
             sys.stdout.write(command +'\n')
             sys.stdout.flush()
             self.createResponse("Shutdown Performed\n", 200)
-        elif(exa_pipe.writeToInput(command) == 0):
+
+        if('is running' in command and self.exabgp_is_running()):
+            self.createResponse("True", 200);
+            return
+        else:
+            self.createResponse("False", 200)
+            return
+
+        if(exa_pipe.writeToInput(command) == 0):
             #wait for exabgp to finish writing in the exabgp.out pipe
             time.sleep(2)
             response = exa_pipe.readFromOutPut()
@@ -88,7 +96,7 @@ class ExaBGPServerHandler(http.server.SimpleHTTPRequestHandler):
 
             if(exa_pipe.writeToInput(args['command']) == 0):
                 #wait for exabgp to finish writing in the exabgp.out pipe
-                time.sleep(5)
+                time.sleep(1)
                 response = exa_pipe.readFromOutPut()
                 self.createResponse('Success:\n' + response, 200)
             else:
