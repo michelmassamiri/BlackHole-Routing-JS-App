@@ -1,39 +1,33 @@
 import { Meteor } from  'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Session } from 'meteor/session';
 
 import './listCommand.html';
 
+
 Template.listCommand.onCreated(function getVersion() {
     this.exa_version = new ReactiveVar("");
-    this.is_exa_running = new ReactiveVar("");
-
-    Meteor.call('execute.get.command', 'show version', (error, response)=> {
-      if(error) {
-          alert(error);
-      }  else {
-          this.exa_version.set(response);
-      }
-    });
-
-    Meteor.call('execute.post.command', 'is running', (error, is_running)=> {
-       if(error) {
-           alert(error);
-       }
-       else {
-           this.is_exa_running.set(is_running);
-       }
-    });
 });
 
 Template.listCommand.helpers({
-    isRunning() {
-        const instance = Template.instance();
-        return instance.is_exa_running.get() === 'True';
+    showErrorisRunning() {
+        return Session.get('ExaError');
     },
 
    getResult() {
-       const instance = Template.instance();
-       return instance.exa_version.get();
+        const instance = Template.instance();
+        Meteor.call('execute.command', 'show version', 'GET', (error, response)=> {
+           if(error) {
+               instance.exa_version.set(error.reason);
+           }  else {
+               instance.exa_version.set(response);
+           }
+        });
+        return instance.exa_version.get();
    }
+});
+
+Template.registerHelper('isExaRunning', () => {
+    return Meteor.exaApi.checkExaIsRunning();
 });

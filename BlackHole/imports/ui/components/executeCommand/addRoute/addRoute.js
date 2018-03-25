@@ -5,25 +5,39 @@ import { Template } from 'meteor/templating';
 
 Template.addRoute.events({
    'click #submit-btn'(event) {
+
+      let value = true;
       let command_name = "announce route";
-      let champ1 = document.forms["addRoute"].elements["ip"].value;
-      let champ2 = document.forms["addRoute"].elements["next_hop"].value;
-      let champ3 = document.forms["addRoute"].elements["local-pref"].value;
-      let champ4 = document.forms["addRoute"].elements["community"].value;
+      let ip = document.forms["addRoute"].elements["ip"].value;
+      if( ip === "" || !Meteor.verifyParams.verifyIP(ip, false) ){ value = false;}
+      let next_hop = document.forms["addRoute"].elements["next_hop"].value;
+      if(next_hop === "" || !Meteor.verifyParams.verifyIP(next_hop, true) ){  value = false;}
+      let pref = document.forms["addRoute"].elements["local-pref"].value;
+      let community = document.forms["addRoute"].elements["community"].value;
+      //if(community === ""){ value = false;}
 
-      let json =JSON.stringify({
-          "command": command_name,
-          "ip": champ1,
-          "next_hop": champ2,
-          "local_pref": champ3,
-          "community": champ4,
+      if(!value) {
+          alert("ERROR : Please insert a valid IP address, Example :\n IP source :10.52.30.2/24\n next-hop : 123.14.3.20");
+          return false;
+      }
+
+      next_hop = "next-hop ".concat(next_hop);
+      if(pref !== "")
+          pref = "local-preference ".concat(pref);
+      if(community !=="")
+          community = "community ".concat(community);
+
+      let array_of_args = [command_name, ip, next_hop, pref, community];
+      Meteor.jsonCoder.initJsonCoder(array_of_args);
+      let json_obj = Meteor.jsonCoder.formatToJson();
+
+      Meteor.call('execute.command', json_obj, 'POST', (error, result)=> {
+          if(error) {
+              alert(error.reason + ' détails : ' + (error.details)? error.details : 'pas de détails');
+          }
+          else {
+              sweetAlert('La route' + ip + ' ' + 'a été bien annoncée !');
+          }
       });
-
-      let obj = JSON.parse(json);
-      console.log(command_name, champ1, champ2, champ3, champ4);
-      console.log(obj.command);
-      console.log(json);
-
-      Meteor.call('announceRoute', {data: obj});
     }
 });

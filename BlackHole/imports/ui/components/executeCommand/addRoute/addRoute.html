@@ -3,42 +3,37 @@
     <form class="form-horizontal" name="addRoute">
 
         <div class="form-group">
-            <label class="col-sm-3 control-label" for="cidr">Adresse IP</label>
+            <label class="col-sm-3 control-label" for="ip">Adresse IP</label>
             <div class="col-sm-9">
-                <input id="ip" class="form-control" name="ip" placeholder="Adresse IP" required="required" type="text">
+                <input type="text"  class="form-control" id="ip" placeholder="Adresse IP"  required>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label" for="add-next-hop">Next hop</label>
+            <label class="col-sm-3 control-label" for="next-hop">Next hop</label>
             <div class="col-sm-9">
-              <input id="next_hop" class="form-control" name="next_hop" placeholder="Adresse IP" required="required" type="text">
+              <input id="next_hop" class="form-control" name="next_hop" placeholder="Adresse IP" type="text" required>
+              <span class="result"></span>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-3 control-label" for="add-local-pref">Préférence locale</label>
             <div class="col-sm-9">
-                <input id="add-local-pref" class="form-control" name="local-pref" placeholder="Préférence locale" required="required" type="text">
+                <input id="add-local-pref" class="form-control" name="local-pref" placeholder="Préférence locale" type="text">
+                <span class="result"></span>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label" for="add-communities">Communautés</label>
+            <label class="col-sm-3 control-label" for="community">Communautés</label>
             <div class="col-sm-9">
-                <input id="community" class="form-control" name="community" placeholder="Communautés" required="required" type="text">
+                <input id="community" class="form-control" name="community" placeholder="Communautés" type="text" required  >
+                <span class="result"></span>
             </div>
         </div>
         <div class="text-right">
             <a id="submit-btn" class="btn btn-primary" href="#">Lancer</a>
-            <div class="return-message col-md-offset-10">
-                <div>
-                <pre>
-                  <code id="command-result"></code>
-                </pre>
-                </div>
-            </div>
-
         </div>
     </form>
 </template>

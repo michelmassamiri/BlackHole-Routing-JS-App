@@ -28,6 +28,8 @@ body{
 }
 
 .return-message {
-    display: block;
     padding-top: 10px;
+    margin: auto;
+    max-width: 70% ;
+    text-align: center;
 }

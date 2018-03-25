@@ -1,5 +1,6 @@
 import os
 import time
+import select
 
 from sys import stdout
 from io import StringIO
@@ -31,15 +32,29 @@ class ExaPipe:
         returns (str): The exabgp response, if something went wrong, it returns
         an "error Message"
         """
-        fifo_receiver = open(self.output_pipe_path, "r")
-        if(fifo_receiver == None):
-            return "exabgp.out pipe does not exist\n"
+        reader = open(self.output_pipe_path, "r")
+        if(reader == None):
+            return 'exabgp.in does not exists\n'
 
         str_buffer = StringIO()
-        for line in fifo_receiver:
-            str_buffer.write(line)
+        done = False
+        while not done:
+                try:
+                            for line in reader:
+                                str_buffer.write(line)
+                                if('done' in str_buffer.getvalue() or 'error' in str_buffer.getvalue()):
+                                    done = True
+                                    break
+
+                            select.select([reader],[],[],0.01)
+                except OSError as exc:
+                    if exc.errno in error.block:
+                        break
+                except IOError as exc:
+                    if exc.errno in error.block:
+                        break
 
         response = str_buffer.getvalue()
         str_buffer.close()
-        fifo_receiver.close()
+        reader.close()
         return response
