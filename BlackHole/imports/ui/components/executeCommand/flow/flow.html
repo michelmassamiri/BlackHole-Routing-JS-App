@@ -3,28 +3,28 @@
     <form class="form-horizontal">
 
         <div class="form-group">
-            <label class="col-sm-3 control-label" for="source-ip">Adresse IP source</label>
+            <label class="col-sm-3 control-label" for="source-ip">IP address</label>
             <div class="col-sm-9">
                 <input id="source-ip" class="form-control" name="source-ip" placeholder="source-ip" required="required" type="text">
             </div>
 	</div>
 	
 	<div class="form-group">
-	    <label class="col-sm-3 control-label" for="destination-ip">Adresse IP destination</label>
+	    <label class="col-sm-3 control-label" for="destination-ip">IP address destination</label>
             <div class="col-sm-9">
                 <input id="destination-ip" class="form-control" name="destination-ip" placeholder="destination-ip" required="required" type="text">
             </div>
 	</div>
 
 	<div class="form-group">
-	    <label class="col-sm-3 control-label" for="destination-port">Numéro de port de destination (optionnel)</label>
+	    <label class="col-sm-3 control-label" for="destination-port">Optional port for the destination</label>
             <div class="col-sm-9">
                 <input id="destination-port" class="form-control" name="destination-port" placeholder="destination-port" required="required" type="text">
             </div>
 	</div>
 
 	 <div class="form-group">
-            <label class="col-sm-3 control-label" for="protocol">Protocol (optionnel)</label>
+            <label class="col-sm-3 control-label" for="protocol">Optional protocol</label>
             <div class="col-sm-9">
                 <select id="protocol" class="form-control" multiple="" name="protocol" required="required">
                     <option value="tcp">TCP</option>
@@ -34,14 +34,14 @@
         </div>
 	
 	<div class="form-group">
-	    <label class="col-sm-3 control-label" for="rate-limit">Rate-limit (optionnel)</label>
+	    <label class="col-sm-3 control-label" for="rate-limit">Rate-limit (optional)</label>
             <div class="col-sm-9">
                 <input id="rate-limit" class="form-control" name="rate-limit" placeholder="rate-limit 1" required="required" type="text">
             </div>
         </div>
 	
         <div class="text-right">
-            <a id="submit-btn" class="btn btn-primary" href="#">Lancer</a>
+            <a id="submit-btn" class="btn btn-primary" href="#">Execute</a>
             <div class="return-message col-md-offset-10">
                 <div>
                 <pre>

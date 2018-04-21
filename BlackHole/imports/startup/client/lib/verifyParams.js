@@ -15,7 +15,7 @@ Meteor.verifyParams = {
                 return false ;
             }
 
-            if(network_part.length > 2 && (parseInt(network_part[1]) > 32))
+            if(network_part.length > 2 || (parseInt(network_part[1]) > 32))
                 return false ;
         }
         else {
@@ -60,3 +60,5 @@ Meteor.verifyParams = {
         return bool_ipv4 || bool_ipv6;
     }
 };
+
+export default testVerifyParams = Meteor.verifyParams ;

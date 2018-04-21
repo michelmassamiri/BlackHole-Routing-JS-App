@@ -26,4 +26,12 @@ twbs:bootstrap
 iron:router
 accounts-ui
 accounts-password
+aldeed:simple-schema
+aldeed:collection2
+practicalmeteor:mocha
+dburles:factory
+practicalmeteor:chai
+xolvio:cleaner
+mdg:validated-method
 kevohagan:sweetalert
+peppelg:bootstrap-3-modal

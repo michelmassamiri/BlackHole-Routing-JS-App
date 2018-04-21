@@ -1,12 +1,12 @@
 <template name="listRoutes">
-    <h3>Rechercher des routes par adresse IP source, communauté ou destination</h3>
+    <h3>Search network by IP address, community or date</h3>
     <div class="row">
         <div class="col-sm-6">
             <div id="custom-search-input">
                 <div class="input-group col-sm-12">
-                    <input type="text" class="form-control input-lg" placeholder="10.3.1.10/24" />
+                    <input type="text" class="form-control input-lg" id="input-search" placeholder="10.3.1.10/24" />
                     <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button">
+                        <button id="search" class="btn btn-info btn-lg" type="button">
                             <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
@@ -16,7 +16,7 @@
     </div>
 
     <h3>
-        Sous-réseaux annoncés
+        Announced Network
         <a id="reload-btn" class="small" href="#">
             <span class="glyphicon glyphicon-refresh"></span>
         </a>
@@ -27,38 +27,47 @@
             <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th>Réseau</th>
+                <th>Network</th>
                 <th>Next hop</th>
-                <th>Préférence locale</th>
-                <th>Communautés</th>
-                <th>Créé le</th>
-                <th>Modifié le</th>
+                <th>Local preference</th>
+                <th>Communities</th>
+                <th>Created at</th>
+                <th>Modified at</th>
+                <th>Status</th>
                 {{#if currentUser}}
                     <th class="text-center">Actions</th>
                 {{/if}}
             </tr>
             </thead>
             <tbody>
-            <tr id="element-1">
-                <th class="index" scope="row">1</th>
-                <td class="cidr">1.1.1.0/24</td>
-                <td>198.51.100.42</td>
-                <td class="local_pref"></td>
-                <td id="com-2">1337:1984</td>
-                <td id="date-1">mardi 15 septembre 2015 13:43</td>
-                <td id="mod-date-1">mardi 19 décembre 2017 22:19</td>
-                {{#if currentUser}}
-                    <td class="text-center">
-                        <a id="mod-2" href="#" data-id="2" data-cidr="1.1.1.0/24" data-next-hop="198.51.100.42" data-local_pref="" data-communities="1337:1984">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                        </a>
-                        <a id="delete-2" href="#">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </td>
-                {{/if}}
-            </tr>
+            {{#each routes}}
+              <tr id="element-1">
+                  <th class="index" scope="row">{{ increment @index}}</th>
+                  <td class="cidr">{{ ip_source }}</td>
+                  <td>{{ next_hop }}</td>
+                  <td class="local_pref"></td>
+                  <td id="com-2">{{ community }}</td>
+                  <td id="date-1">{{ created_at }}</td>
+                  <td id="mod-date-1">{{ modify_at }}</td>
+                  <td id="status">
+                    <a id="activate" href="#"  data-ip_source={{ip_source}} data-next-hop={{next_hop}} data-community={{community}} data-status={{activated}} >{{isActivate activated}}</a>
+                  </td>
+                  {{#if currentUser}}
+                      <td class="text-center">
+                            <a id="mod-2" href="#"  >
+                                <span class="glyphicon glyphicon-pencil" data-ip_source={{ip_source}} data-next-hop={{next_hop}} data-community={{community}}></span>
+                          </a>
+                          <a id="delete-2" href="#" ip_source={{ip_source}} next-hop={{next_hop}} community={{community}} >
+                              <span class="glyphicon glyphicon-remove"></span>
+                          </a>
+                      </td>
+                  {{/if}}
+              </tr>
+            {{/each}}
             </tbody>
         </table>
     </div>
+
+<!-- {{> updateModal}} -->
+
 </template>

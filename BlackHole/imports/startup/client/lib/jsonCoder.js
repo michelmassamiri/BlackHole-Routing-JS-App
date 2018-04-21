@@ -8,22 +8,25 @@
 import { Meteor } from 'meteor/meteor';
 
 Meteor.jsonCoder = {
-    array_orf_args: "",
+    command_args: "",
     initJsonCoder: function(array_of_args) {
         if (array_of_args.length === 0) {
-            this.array_orf_args = null;
+            this.command_args = null;
+            throw new Meteor.Error('Meteor.jsonCoder', 'The array passed to the parameters is null !', 'Please pass a valid array');
         }
-        this.array_orf_args = {
+        this.command_args = {
             "command":array_of_args[0],
         };
 
         for(let i = 1; i < array_of_args.length; ++i) {
-            this.array_orf_args["arg"+i.toString()] = array_of_args[i];
+            this.command_args["arg"+i.toString()] = array_of_args[i];
         }
     },
 
     formatToJson: function() {
-        let json_obj = JSON.stringify(this.array_orf_args);
+        let json_obj = JSON.stringify(this.command_args);
         return JSON.parse(json_obj);
     }
 };
+
+export default testJsonCoder = Meteor.jsonCoder;

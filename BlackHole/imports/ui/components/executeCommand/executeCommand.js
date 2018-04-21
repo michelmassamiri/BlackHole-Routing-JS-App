@@ -25,7 +25,7 @@ Template.executeCommand.helpers({
 Template.executeCommand.events({
    'click #submit-btn'(event, instance) {
        if(!Meteor.exaApi.checkExaIsRunning()){
-           alert("ExaBGP ne tourne pas !, pas possible d'exécuter des commandes");
+           alert("ExaBGP is not working !, it is not possible to execute ExaBGP commands");
            return;
        }
 
@@ -43,15 +43,15 @@ Template.executeCommand.events({
 
                Meteor.call('execute.command', Meteor.jsonCoder.formatToJson(), 'POST', (err, res)=> {
                   if(err) {
-                      alert(err.reason + 'détails : ' + (err.details)? err.details : 'Pas de détails');
+                      alert(err.reason + 'details : ' + (err.details)? err.details : 'no details');
                   }
                   else {
                       if(command.includes('shutdown') && !Meteor.exaApi.checkExaIsRunning()) {
-                          sweetAlert('Done !: '+ command + ' a été bien exécuté');
+                          sweetAlert('Done !: '+ command + ' has been successfully executed');
                           return;
                       }
 
-                      sweetAlert('Done !: '+ command + ' a été bien exécuté');
+                      sweetAlert('Done !: '+ command + ' has been successfully executed');
                   }
                });
            }

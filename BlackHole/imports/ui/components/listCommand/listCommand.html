@@ -3,13 +3,12 @@
         <div class="text-right">
             <h4>
                 <a class="label label-info" href="https://github.com/Exa-Networks/exabgp/wiki/Controlling-ExaBGP-:-interacting-from-the-API">API</a>
-                <a id="reload-exabgp" class="label label-default" href="/">Relancer Exabgp</a>
             </h4>
             <h4 id="exabgp-h4">
                 {{#if isExaRunning}}
-                    <span id="exabgp-status" class="label label-success">Exabgp fonctionne avec la version : {{getResult}}</span>
+                    <span id="exabgp-status" class="label label-success">Exabgp works with the version : {{getResult}}</span>
                 {{else}}
-                    <span id="exabgp-status" class="label label-danger">Exabgp ne fonctionne pas, message d'erreur : {{showErrorisRunning}}</span>
+                    <span id="exabgp-status" class="label label-danger">Exabgp is not working, ERROR message : {{showErrorisRunning}}</span>
                 {{/if}}
             </h4>
         </div>

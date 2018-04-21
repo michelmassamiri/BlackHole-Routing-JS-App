@@ -14,7 +14,7 @@ Template.delRoute.events({
         if(next_hop === "" || !Meteor.verifyParams.verifyIP(next_hop, true) ){  value = false;}
 
         if(!value) {
-            alert("ERROR : Please insert a valid IP address, Example :\n IP source :10.52.30.2/24\n next-hop : 123.14.3.20");
+            alert("ERROR : Please insertRoute a valid IP address, Example :\n IP source :10.52.30.2/24\n next-hop : 123.14.3.20");
             return false;
         }
 
@@ -27,10 +27,10 @@ Template.delRoute.events({
 
         Meteor.call('execute.command', json_obj, 'POST', (error, result)=> {
             if(error) {
-                alert(error.reason + ' détails : ' + (error.details)? error.details : 'pas de détails');
+                alert(error.reason + ' details : ' + (error.details)? error.details : 'no details');
             }
             else {
-                sweetAlert('La route' + ip + ' ' + 'a été bien supprimé (withdraw)!');
+                sweetAlert('The route' + ip + ' ' + 'has been correctly withdrawn!');
             }
         });
     }

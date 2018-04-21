@@ -6,6 +6,7 @@ import { Template } from 'meteor/templating';
 Template.addRoute.events({
    'click #submit-btn'(event) {
 
+
       let value = true;
       let command_name = "announce route";
       let ip = document.forms["addRoute"].elements["ip"].value;
@@ -17,10 +18,11 @@ Template.addRoute.events({
       //if(community === ""){ value = false;}
 
       if(!value) {
-          alert("ERROR : Please insert a valid IP address, Example :\n IP source :10.52.30.2/24\n next-hop : 123.14.3.20");
+          alert("ERROR : Please insertRoute a valid IP address, Example :\n IP source :10.52.30.2/24\n next-hop : 123.14.3.20");
           return false;
       }
 
+      //send the command
       next_hop = "next-hop ".concat(next_hop);
       if(pref !== "")
           pref = "local-preference ".concat(pref);
@@ -33,11 +35,24 @@ Template.addRoute.events({
 
       Meteor.call('execute.command', json_obj, 'POST', (error, result)=> {
           if(error) {
-              alert(error.reason + ' détails : ' + (error.details)? error.details : 'pas de détails');
+              let err_details = (error.details)? error.details : 'no error details';
+              let msg = error.reason + " details : " + err_details;
+              alert(msg);
           }
           else {
-              sweetAlert('La route' + ip + ' ' + 'a été bien annoncée !');
+              sweetAlert('The Route' + ip + ' ' + 'has been correctly announced!');
           }
       });
+
+      //update bdd
+      const route = {
+        ip_source: ip,
+        next_hop: document.forms["addRoute"].elements["next_hop"].value,
+        community: community,
+        activated: true,
+        created_at: new Date(),
+      };
+
+      Meteor.call('Routes.methods.insert', route);
     }
 });

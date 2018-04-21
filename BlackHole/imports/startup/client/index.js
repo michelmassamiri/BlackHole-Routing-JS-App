@@ -3,4 +3,4 @@
 import './routes.js';
 import './lib/jsonCoder.js';
 import './lib/verifyParams.js';
-import './lib/checkExaisRunning.js';
+import './lib/checkExaIsRunning.js';

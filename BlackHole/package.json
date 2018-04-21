@@ -8,9 +8,13 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.40",
     "bcrypt": "^1.0.3",
-    "meteor-node-stubs": "^0.3.2"
+    "meteor-node-stubs": "^0.3.2",
+    "simpl-schema": "^1.4.2"
   },
   "devDependencies": {
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "chromedriver": "^2.37.0",
+    "phantomjs-prebuilt": "^2.1.16",
+    "selenium-webdriver": "^3.6.0"
   }
 }
