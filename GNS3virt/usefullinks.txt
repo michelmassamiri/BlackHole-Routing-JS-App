@@ -1,0 +1,20 @@
+Blackhole config:
+https://www.cisco.com/c/dam/en_us/about/security/intelligence/blackhole.pdf
+https://www.m00nie.com/2014/01/bgp-rtbh-setup-using-exabgp/
+
+Cisco config:
+http://routeur.clemanet.com/routage-statique-cisco.php
+
+DNS config:
+https://www.fdn.fr/actions/dns/
+https://debian-facile.org/doc:systeme:resolv.conf
+
+Interfaces config:
+https://wiki.debian-fr.xyz/Le_fichier_interfaces
+https://wiki.debian.org/fr/NetworkConfiguration#Configurer_une_interface_Ethernet
+
+Connecter gns3 à internet:
+https://websistent.com/how-to-connect-gns3-to-the-internet/
+
+ExaBGP basics:
+https://thepacketgeek.com/influence-routing-decisions-with-python-and-exabgp/

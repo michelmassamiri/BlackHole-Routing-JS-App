@@ -1,0 +1,166 @@
+-------------------------
+-----Virtualisation------
+-------------------------
+
+
+---------------
+I.\Installation
+---------------
+
+	I.1\NEmu
+	--------
+
+		-Install NEmu: http://nemu.valab.net/index.php?static27/tuto-setup-nemu-linux
+
+		-Download Debian9_lxde iso: https://caesar.ftp.acc.umu.se/debian-cd/current-live/i386/iso-hybrid/debian-live-9.3.0-i386-lxde.iso
+
+		-Install Debian on a virtual HD: _(optional) edit the "img_dir" and "src_dir" variables in "install_debian9.py". Otherwise, you need to run the script with nemu from the iso directory. The Virtual HD will be created in this directory too.
+	 	     	     	 _$>nemu -f install_debian9.py
+				 _follow the instructions
+
+
+		-Duplicate created img:	_(optional) see above : edit the "path" variable if necessary
+			_$>./duplicate_img
+			_client.qcow2 attacker.qcow2 target.qcow2 and route_server.qcow2 will be created
+
+	I.2\ Dynamips
+	-------------
+		-$sudo apt-get dynamips
+
+
+--------------------------
+II.Configuration Routeur:
+--------------------------
+
+
+Etape 0:  Lancer ./dyna.sh
+--------
+
+Etape 1: xterm &; (Dans le xterm)telnet 127.0.0.1 2001; //config premier routeur
+--------
+
+Etape 2: message dialog -> no; en;(Passage en droit admin);
+--------
+
+Etape 3: Configuration IP
+--------
+
+	Router>en
+	Router#conf t
+	Router(config)#hostname Router1
+
+	Router1(config)#interface fastEthernet 1/0
+	Router1(config-if)#ip address 10.1.0.1 255.255.0.0
+	Router1(config-if)#no shutdown
+	Router1(config-if)#exit
+
+	Router1(config)#interface fastEthernet 2/0
+	Router1(config-if)#ip address 11.1.0.1 255.255.0.0
+	Router1(config-if)#no shutdown
+	Router1(config-if)#exit
+
+	Router1(config)#exit
+	Router1#sh run interface
+
+Etape 4: Configuration Route
+--------
+
+	Router1#conf t
+	Router1(config)#ip route 11.2.0.0 255.255.0.0 11.1.0.3
+	Router1(config)#exit
+
+	Router1#sh ip route
+
+Etape 5: Configuration BGP
+--------
+
+	Router1#conf t
+	Router1(config)#router bgp 64501
+	Router1(config-router)#neighbor 11.1.0.2 remote-as 64501
+	Router1(config-router)#neighbor 11.1.0.3 remote-as 64501
+	Router1(config-router)#neighbor 11.1.0.4 remote-as 64501
+	Router1(config-router)#neighbor 10.1.0.2 remote-as 64502
+	Router1(config-router)#neighbor 10.1.0.3 remote-as 64503
+	Router1(config-router)#exit
+	Router1(config)#exit
+	Router1#sh bgp sum
+
+Etape 6: Enregistrer configuration
+--------
+
+	Router1#wr
+
+Etape 7: Refaire la démarche pour le Router2 et Router3
+--------
+
+	telnet 127.0.0.1 2002
+	name: Router2
+	fa1/0: 10.2.0.1 255.255.0.0
+	fa2/0: 11.1.0.2 255.255.0.0
+	ip route 11.2.0.0 255.255.0.0 11.1.0.3
+	router bgp 64501
+	neighbor 11.1.0.1 remote-as 64501
+	neighbor 11.1.0.3 remote-as 64501
+	neighbor 11.1.0.4 remote-as 64501
+	neighbor 10.2.0.3 remote-as 64502
+	neighbor 10.2.0.2 remote-as 64503
+
+	telnet 127.0.0.1 2003
+	name: Router3
+	fa1/0: 11.1.0.3 255.255.0.0
+	fa2/0: 11.2.0.1 255.255.0.0
+	ip route 10.1.0.0 255.255.0.0 11.1.0.1
+	ip route 10.2.0.0 255.255.0.0 11.1.0.2
+	router bgp 64501
+	neighbor 11.1.0.1 remote-as 64501
+	neighbor 11.1.0.2 remote-as 64501
+	neighbor 11.1.0.4 remote-as 64501
+	neighbor 11.2.0.2 remote-as 64504
+
+----------------------
+III.\Run virtualization
+----------------------
+
+	-$>cd dynafile          //this directory will be used to store dynamips generated files in order to keep working directory clean
+	-$>./dyna.sh		//run the virtualization of the 3 ciscos router
+	-$>cd ..
+
+	-$>nemu -f  topology.py -i 	//run the virtualization of the 4 debian img
+
+-------------------------
+VI.Configuration Meteor:
+-------------------------
+
+
+!!! A installer sur route-server !!!
+
+$> sudo  apt-get install curl
+$> curl https://install.meteor.com/ | sh
+$> cd BlackHole
+$> meteor add aldeed:simple-schema
+$> meteor add aldeed:collection2
+$> meteor add dburles:collection-helpers
+$> meteor npm install --save @babel/runtime
+$> meteor npm install simpl-schema@>=0.0.0
+$> meteor add practicalmeteor:mocha
+$> meteor add dburles:factory
+$> meteor add practicalmeteor:chai
+$> meteor add xolvio:cleaner
+$> meteor add kevohagan:sweetalert
+$> meteor npm i --save-dev phantomjs-prebuilt
+$> meteor add peppelg:bootstrap-3-modal
+$> meteor
+
+-----------------------
+Lancer les tests de meteor
+$> TEST_BROWSER_DRIVER=phantomjs meteor test --once --driver-package meteortesting:mocha
+
+------------------------
+V.Configuration ExaBGP
+------------------------
+
+!!! A installer sur route-server !!!
+
+$> apt-get install python3-pip
+$> pip3 install exabgp
+$> exabgp conf.ini

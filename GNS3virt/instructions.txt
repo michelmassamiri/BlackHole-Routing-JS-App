@@ -1,0 +1,55 @@
+-----------------
+Mise en place de la virtualisation pour effectuer les tests
+-----------------
+- Installer GNS3.
+  	    sudo add-apt-repository ppa:gns3/ppa
+	    sudo apt-get update
+	    sudo apt-get install gns3-gui
+- Installer uml-utilities.
+  	    sudo apt-get install uml-utilities
+- Télécharger une image CISCO (non libre).
+- Télécharger une image Debian (nous utilisons la 9.4.0 amd64 netinst).
+- Exécuter le script 'internet_access.sh' qui configure un tap pour avoir accès à internet depuis les machines sur GNS3, et qui permettra par la suite de se connecter à meteor depuis notre machine physique.
+Insérer cette ligne à la fin du fichier qui s'ouvre :
+	@reboot /usr/sbin/tunctl -t tap0 && /sbin/ifconfig tap0 10.200.200.1 netmask 255.255.255.252 up
+	
+- Lancer GNS3 (root conseillé pour la mise en place de l'accès internet en premier lieu).
+
+------------------
+Sur GNS3
+------------------
+- Ajouter :
+       - 3 routeurs CISCO
+       - 4 machines Debian
+       - 4 switchs
+       - Un "Cloud" (vérifier que tap0 soit disponible)
+  Puis, connecter les machines comme indiqué dans l'image 'topology.png'.
+- Lancer les machines une première fois pour effectuer les installations.
+- Importer les configs des 3 routeurs (dossier routeurconf).
+- Copier les fichiers interfaces des machines Attacker, Client, Target (fichier situé dans /etc/network/interfaces dans les machines debian). Pour route server, il y a deux fichiers interfaces disponibles, un pour l'accès à internet (à utiliser en premier lieu) et un autre qui servira à la connexion aux routeurs.
+
+-------------------
+Sur "RouteServer"
+-------------------
+- La résolution DNS peut ne pas fonctionner, dans ce cas il faut éditer le fichier '/etc/resolv.conf' ou le créer, et y entrer :
+     nameserver 80.67.169.12
+     nameserver 80.67.169.40
+     
+(ce sont des serveurs DNS ouverts de la FDN)
+- Installer Git, Meteor et ExaBGP.
+- git clone https://NA@services.emi.u-bordeaux.fr/projet/git/blackholepdp
+- Lancer meteor une premiere fois avec la connexion internet pour télécharger les packages.
+- Changez le fichier interfaces de route serveur, y copier le contenu de "routeserver_routeurs". Puis effectuer un reboot de la machine.
+- Dans le git, lancer exaBGP depuis 'src/vitualization/exabgp/'.
+       exabgp conf_http.ini &
+- Dans le git, lancer meteor depuis 'blackhole/'
+       meteor &
+
+-------------------
+Sur machine physique
+-------------------
+- Dans un navigateur web, entrer l'adresse :
+       http://10.200.200.2:3000/
+
+
+Les tests sont prêts à être effectués.

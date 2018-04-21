@@ -1,0 +1,20 @@
+----------------
+Tests Virtualisation
+----------------
+
+Ces tests permettent de mettre en pratique notre développement, rassemblant meteor, exabgp, et un réseau bgp virtualisé sur gns3. Les routeurs sont configurés de sorte qu'il soit possible de dévier des routes vers un trou noir (concrètement, les paquets seront transmis à une interface Null0 à laquelle on attribut une adresse non utilisée ou utilisable).
+
+Dans notre configuration, le "trou noir" est à l'adresse 192.0.2.1
+
+Des screens de nos tests sont disponibles dans le dossier "testscreens".
+
+Pour lancer et vérifier nos tests, nous avons le client de meteor dans un navigateur sur notre machine physique, les sorties standards du serveur meteor et d'exabgp sur le terminal de "RouteServer" ainsi que la possibilité de vérifier les tables de routages de nos trois routeurs via telnet :
+$show ip table
+
+Dans la table de routage nous avons les routes statics indiquées par un S en début de ligne, ce sont celles configurées dans le routeur, on peut en ajouter ou en supprimer par les commandes :
+$conf t
+$router bgp 64501
+$ip route <IpDest> <Mask> <Nexthop>     #Pour ajouter
+$no ip route <IpDest> <Mask> <Nexthop>  #Pour supprimer
+
+Pour verifier que nos routes annoncées depuis le client meteor aient bien été prises en compte, nous avons un B (pour BGP) en début de ligne des routes dans les tables de routage.
